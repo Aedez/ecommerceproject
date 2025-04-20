@@ -3,7 +3,7 @@
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 
 
-A basic cloud-native ecommerce backend database system, designed for scalability, high availability, and production-ready deployment on AWS using Infrastructure as Code (IaC).
+A cloud-native ecommerce backend database system, designed for scalability, high availability, and production-ready deployment on AWS using Infrastructure as Code (IaC).
 
 ## 📌 Project Goals
 
