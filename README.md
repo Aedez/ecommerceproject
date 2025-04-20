@@ -1,35 +1,80 @@
-# 🛒 Ecommerce DMS (Database Management System)
+# 🛒 Ecommerce Database Management System (DMS)
 
-An end-to-end database infrastructure project for a scalable ecommerce platform. Designed for cloud-native deployment with AWS RDS, automated provisioning using Terraform, and robust monitoring via CloudWatch.
+A cloud-native ecommerce backend database system, designed for scalability, high availability, and production-ready deployment on AWS using Infrastructure as Code (IaC).
 
-## 🚀 Features
+## 📌 Project Goals
 
-### Functional Requirements
-- Product catalog (name, description, price, inventory)
-- User accounts and profiles
-- Shopping cart and order placement
-- Payment records and order status tracking
+This project demonstrates best practices in cloud database design and management, covering:
+- Schema modeling and normalization
+- Infrastructure automation with Terraform
+- Data population and validation with Python
+- CI/CD for schema migrations
+- Real-time monitoring using CloudWatch
 
-### Non-Functional Requirements
-- High availability (Multi-AZ RDS)
-- Scalability (read replicas, partitioned tables)
-- Security (IAM, encryption at rest, secure access)
+---
 
-## 🧰 Tech Stack
+## 📦 Features
 
-- **Database**: PostgreSQL on AWS RDS
-- **IaC**: Terraform
-- **Scripting**: Python (psycopg2, Faker)
-- **Monitoring**: CloudWatch, optional Grafana
-- **CI/CD**: GitHub Actions + Flyway (or Alembic)
-- **Visualization**: draw.io / Lucidchart for ERD
+### ✅ Functional Requirements
+- Product catalog (name, price, inventory, etc.)
+- User accounts and profiles (login, addresses)
+- Shopping cart and order processing
+- Payment tracking and order status updates
 
-## 🗂️ Repository Structure
+### 🔐 Non-Functional Requirements
+- High availability via Multi-AZ RDS
+- Scalability using read replicas
+- Security with IAM policies and encryption at rest
 
-├── terraform/ # Infrastructure as Code (RDS setup) 
-├── schema/ # SQL schema, migrations 
-├── scripts/ # Python data loading and tests 
-├── ci-cd/ # CI/CD pipelines 
-├── monitoring/ # CloudWatch alarms 
-├── diagrams/ # ER diagrams and architecture visuals 
-    └── docs/ # Requirements, documentation
+---
+
+## ⚙️ Tech Stack
+
+| Component       | Tool/Service             |
+|----------------|--------------------------|
+| Database        | PostgreSQL on AWS RDS    |
+| IaC             | Terraform                |
+| Scripting       | Python (Faker, psycopg2) |
+| CI/CD           | GitHub Actions + Flyway  |
+| Monitoring      | CloudWatch, Grafana (optional) |
+| Visualization   | draw.io (ER diagrams)    |
+
+---
+
+## 🗂️ Directory Structure
+
+ecommerce-dms/
+│
+├── .gitignore                  # Ignored files and folders
+├── README.md                   # Project documentation
+│
+├── terraform/                  # Infrastructure as Code (AWS RDS setup)
+│   ├── main.tf
+│   ├── variables.tf
+│   ├── outputs.tf
+│   └── provider.tf
+│
+├── schema/                     # SQL schema and migration scripts
+│   ├── ddl/                    # DDL scripts to create tables
+│   │   └── create_tables.sql
+│   └── migrations/             # Migration scripts (Flyway/Alembic)
+│       └── V1__init.sql
+│
+├── scripts/                    # Python scripts for data loading and testing
+│   ├── data_loader.py
+│   └── test_db.py
+│
+├── ci-cd/                      # Continuous Integration & Deployment
+│   ├── github-actions/         # GitHub Actions workflows
+│   │   └── deploy.yml
+│   └── flyway/                 # Optional Flyway config
+│       └── flyway.conf
+│
+├── monitoring/                 # Monitoring configs and alert definitions
+│   └── cloudwatch-alarms.json
+│
+├── diagrams/                   # ER diagrams and architecture visuals
+│   └── conceptual_er.png
+│
+└── docs/                       # Requirements and other documentation
+    └── requirements.md
