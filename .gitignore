@@ -1,0 +1,32 @@
+
+---
+
+## 🛑 .gitignore File
+# This file is used to specify files and directories that should be ignored by Git.
+
+```gitignore
+# Python
+__pycache__/
+*.py[cod]
+*.egg
+.env
+.env.*
+
+# Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+crash.log
+
+# Logs
+*.log
+
+# Flyway or Alembic
+*.sqlite
+*.db
+
+# VS Code
+.vscode/
+
+# System
+.DS_Store

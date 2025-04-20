@@ -1,6 +1,6 @@
 # 🛒 Ecommerce Database Management System (DMS)
 
-A cloud-native ecommerce backend database system, designed for scalability, high availability, and production-ready deployment on AWS using Infrastructure as Code (IaC).
+A basic cloud-native ecommerce backend database system, designed for scalability, high availability, and production-ready deployment on AWS using Infrastructure as Code (IaC).
 
 ## 📌 Project Goals
 
@@ -78,3 +78,46 @@ ecommerce-dms/
 │
 └── docs/                       # Requirements and other documentation
     └── requirements.md
+
+
+
+
+
+## 📦 Getting Started
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/ecommerce-dms.git
+   cd ecommerce-dms
+   ```
+
+2. Initialize Terraform and apply:
+    ```bash
+    cd terraform
+    terraform init
+    terraform apply
+    ```
+3. Load sample data:
+    ```bash
+    cd scripts
+    python data_loader.py
+    ```
+
+
+## 🧪 Testing
+- Run unit tests:
+    ```bash
+    python -m unittest discover -s tests
+    ```
+
+
+## 📈 Monitoring
+- Set up CloudWatch alarms for RDS metrics (CPU, memory, etc.)
+- Optionally, integrate with Grafana for advanced visualization.
+
+
+## 📜 License
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## 📞 Contact
+For questions or feedback, please reach out to:
