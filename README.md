@@ -110,6 +110,53 @@ ecommerce-dms/
     python -m unittest discover -s tests
     ```
 
+## 💶 **Estimated Cost for a Few Hours (Testing in eu-west-1)**
+
+### 🧱 **Amazon RDS (Multi-AZ, db.t3.medium)**
+
+- Hourly cost: ~**€0.076 × 2 instances = €0.152/hour**
+- Storage (100 GB): Pro-rated, ~**€0.012/hour**
+
+**RDS (2-3 hours)** ≈ **€0.30 – €0.45**
+
+---
+
+### 🌐 **2 NAT Gateways**
+
+- Each NAT Gateway: **€0.049/hour × 2 = €0.098/hour**
+- Data: Negligible for a few tests
+
+**NAT (2-3 hours)** ≈ **€0.20 – €0.30**
+
+---
+
+### 📦 **Elastic IPs + Misc.**
+
+- **Elastic IPs** (when attached): **Free**
+- Other small AWS resources (routes, subnets): **Minimal**
+
+---
+
+### 💰 **Total Estimated for 3 Hours Testing**
+| Resource     | Cost Estimate |
+|--------------|---------------|
+| RDS (Multi-AZ)  | ~€0.45        |
+| NAT Gateways    | ~€0.30        |
+| Misc            | ~€0.10        |
+| **Total**       | **~€0.85 – €1.00** |
+
+---
+
+## ✅ Tips to Control Costs
+
+1. **Delete the stack immediately after testing**:
+   ```bash
+   terraform destroy
+   ```
+
+2. **Double-check that RDS snapshots and NAT Gateways are gone**.
+3. **Tag your resources** with `Environment=Test` to track spend later.
+
 
 ## 📈 Monitoring
 - Set up CloudWatch alarms for RDS metrics (CPU, memory, etc.)
