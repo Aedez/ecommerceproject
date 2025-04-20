@@ -1,7 +1,6 @@
 # 🛒 Ecommerce Database Management System (DMS)
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
-[![License](https://img.shields.io/github/license/aedez/ecommerce-dms)](LICENSE)
 
 
 A basic cloud-native ecommerce backend database system, designed for scalability, high availability, and production-ready deployment on AWS using Infrastructure as Code (IaC).
