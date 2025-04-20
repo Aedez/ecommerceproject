@@ -22,6 +22,7 @@ __pycache__/
 *.tfvars.json
 *.tfvars.yaml
 crash.log
+*.terraform.*
 
 # Logs
 *.log
