@@ -1,33 +1,35 @@
 # 🛒 Ecommerce Database Management System (DMS)
 
-![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
+A cloud-native ecommerce backend database system designed for scalability, high availability, and production-ready deployment on AWS using Infrastructure as Code (IaC).
 
-A cloud-native ecommerce backend database system, designed for scalability, high availability, and production-ready deployment on AWS using Infrastructure as Code (IaC).
+---
 
 ## 📌 Project Goals
 
-This project demonstrates best practices in cloud database design and management, covering:
+This project demonstrates best practices in modern cloud database management:
 - Schema modeling and normalization
-- Infrastructure automation with Terraform
-- Data population and validation with Python
-- CI/CD for schema migrations
-- Real-time monitoring using CloudWatch
+- Infrastructure provisioning using Terraform
+- Sample data generation with Python + Faker
+- Schema migrations with Alembic
+- Automated testing and CI/CD
+- Monitoring with CloudWatch
 
 ---
 
 ## 📦 Features
 
 ### ✅ Functional Requirements
-- Product catalog (name, price, inventory, etc.)
+- Product catalog (name, price, category)
 - User accounts and profiles (login, addresses)
 - Shopping cart and order processing
-- Payment tracking and order status updates
+- Payment tracking and order status
 
 ### 🔐 Non-Functional Requirements
-- High availability via Multi-AZ RDS
-- Scalability using read replicas
-- Security with IAM policies and encryption at rest
+- High availability (Multi-AZ RDS)
+- Scalability (read replicas, future support)
+- Secure access (IAM, encryption at rest)
 
 ---
 
@@ -37,50 +39,42 @@ This project demonstrates best practices in cloud database design and management
 |----------------|--------------------------|
 | Database        | PostgreSQL on AWS RDS    |
 | IaC             | Terraform                |
-| Scripting       | Python (Faker, psycopg2) |
-| CI/CD           | GitHub Actions + Flyway  |
-| Monitoring      | CloudWatch, Grafana (optional) |
+| Migrations      | Alembic (Python)         |
+| Data Seeding    | Python (Faker, psycopg2) |
+| Testing         | pytest                   |
+| CI/CD           | GitHub Actions (planned) |
+| Monitoring      | CloudWatch               |
 | Visualization   | draw.io (ER diagrams)    |
 
 ---
 
 ## 🗂️ Directory Structure
 
+```text
 ecommerce-dms/
+├── .gitignore
+├── README.md
 │
-├── .gitignore                  # Ignored files and folders
-├── README.md                   # Project documentation
-│
-├── terraform/                  # Infrastructure as Code (AWS RDS setup)
+├── terraform/                  # AWS infrastructure (VPC, RDS, etc.)
 │   ├── main.tf
 │   ├── variables.tf
-│   ├── outputs.tf
-│   └── provider.tf
+│   └── ...
 │
-├── schema/                     # SQL schema and migration scripts
-│   ├── ddl/                    # DDL scripts to create tables
-│   │   └── create_tables.sql
-│   └── migrations/             # Migration scripts (Flyway/Alembic)
-│       └── V1__init.sql
+├── scripts/                    # Python scripts
+│   ├── data_loader.py          # Inserts sample data
+│   ├── test_db.py              # DB validation tests
+│   ├── .env                    # Secure DB credentials (not committed)
+│   ├── requirements.txt
 │
-├── scripts/                    # Python scripts for data loading and testing
-│   ├── data_loader.py
-│   └── test_db.py
+├── schema/
+│   └── migrations/             # Alembic migration files
+│       └── versions/
+│           └── <timestamp>_init_schema.py
 │
-├── ci-cd/                      # Continuous Integration & Deployment
-│   ├── github-actions/         # GitHub Actions workflows
-│   │   └── deploy.yml
-│   └── flyway/                 # Optional Flyway config
-│       └── flyway.conf
-│
-├── monitoring/                 # Monitoring configs and alert definitions
-│   └── cloudwatch-alarms.json
-│
-├── diagrams/                   # ER diagrams and architecture visuals
-│   └── conceptual_er.png
-│
-└── docs/                       # Requirements and other documentation
-    └── requirements.md
+├── monitoring/                 # CloudWatch alarms (Terraform)
+├── diagrams/                   # ERD and architecture visuals
+└── docs/                       # Requirements and additional docs
+
 
 
 
@@ -90,8 +84,8 @@ ecommerce-dms/
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/ecommerce-dms.git
-   cd ecommerce-dms
+   git clone https://github.com/aedez/ecommerceproject.git
+   cd eecommerceproject
    ```
 
 2. Initialize Terraform and apply:
@@ -100,9 +94,11 @@ ecommerce-dms/
     terraform init
     terraform apply
     ```
-3. Load sample data:
+
+3. Populate the Database
     ```bash
-    cd scripts
+    cd ../scripts
+    pip install -r requirements.txt
     python data_loader.py
     ```
 
@@ -110,35 +106,21 @@ ecommerce-dms/
 ## 🧪 Testing
 - Run unit tests:
     ```bash
-    python -m unittest discover -s tests
+    pytest scripts/test_db.py
+    ```
+
+## 🔄 Migrations with Alembic
+- Create a new migration:
+Uses .env file for credentials.
+    ```bash
+    alembic revision -m "new migration"
+    alembic upgrade head
     ```
 
 ## 💶 **Estimated Cost for a Few Hours (Testing in eu-west-1)**
 
 ### 🧱 **Amazon RDS (Multi-AZ, db.t3.medium)**
 
-- Hourly cost: ~**€0.076 × 2 instances = €0.152/hour**
-- Storage (100 GB): Pro-rated, ~**€0.012/hour**
-
-**RDS (2-3 hours)** ≈ **€0.30 – €0.45**
-
----
-
-### 🌐 **2 NAT Gateways**
-
-- Each NAT Gateway: **€0.049/hour × 2 = €0.098/hour**
-- Data: Negligible for a few tests
-
-**NAT (2-3 hours)** ≈ **€0.20 – €0.30**
-
----
-
-### 📦 **Elastic IPs + Misc.**
-
-- **Elastic IPs** (when attached): **Free**
-- Other small AWS resources (routes, subnets): **Minimal**
-
----
 
 ### 💰 **Total Estimated for 3 Hours Testing**
 | Resource     | Cost Estimate |
@@ -156,7 +138,6 @@ ecommerce-dms/
    ```bash
    terraform destroy
    ```
-
 2. **Double-check that RDS snapshots and NAT Gateways are gone**.
 3. **Tag your resources** with `Environment=Test` to track spend later.
 
