@@ -3,15 +3,15 @@ resource "aws_db_instance" "ecommerce" {
   engine               = "postgres"
   engine_version       = "15"
   instance_class       = var.db_instance_class
-  db_name                 = var.db_name
+  db_name              = var.db_name
   username             = var.db_username
   password             = var.db_password
   storage_encrypted    = true
   skip_final_snapshot  = true
-  publicly_accessible  = false
+  publicly_accessible  = true # Set to false for production
   multi_az             = true
   backup_retention_period = 7
-  deletion_protection  = true
+  deletion_protection  = false
 
   # Add subnet_group_name and vpc_security_group_ids if needed
   vpc_security_group_ids = [aws_security_group.rds_sg.id]

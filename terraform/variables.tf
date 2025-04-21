@@ -11,7 +11,7 @@ variable "db_name" {
 }
 
 variable "db_username" {
-  default = "admin"
+  default = "ecom_user"
 }
 
 variable "db_password" {
@@ -31,3 +31,9 @@ variable "alert_email" {
   description = "Email address to receive CloudWatch alerts"
   type        = string
 }
+
+variable "app_server_ip" {
+  description = "The IP address allowed to access RDS (with /32 CIDR)"
+  type        = string
+  sensitive   = true
+} # This should be the public IP of your app server
