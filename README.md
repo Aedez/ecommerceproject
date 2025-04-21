@@ -74,9 +74,8 @@ ecommerce-dms/
 ├── monitoring/                 # CloudWatch alarms (Terraform)
 ├── diagrams/                   # ERD and architecture visuals
 └── docs/                       # Requirements and additional docs
-
-
-
+```
+---
 
 
 
