@@ -1,29 +1,56 @@
+name: CI/CD with Terraform + Alembic + Dynamic RDS IP Whitelisting
+
+on:
+  push:
+    branches:
+      - main
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      DB_USER: ${{ secrets.DB_USER }}
+      DB_PASS: ${{ secrets.DB_PASS }}
+      DB_NAME: ${{ secrets.DB_NAME }}
+      DB_HOST: ${{ secrets.DB_HOST }}
 
     steps:
-    - name: 📥 Checkout code
+    - name: 📥 Checkout Code
       uses: actions/checkout@v3
 
     - name: 🌐 Get GitHub Runner Public IP
       id: ip
       uses: haythem/public-ip@v1.3
 
-    - name: ✏️ Override app_server_ip for CI
+    - name: ✏️ Create IP Override for Terraform
       run: |
         echo "app_server_ip = \"${{ steps.ip.outputs.ipv4 }}/32\"" > terraform/github-runner.tfvars
 
-    - name: 🧱 Terraform Init & Apply
+    - name: 🔧 Setup Terraform
       uses: hashicorp/setup-terraform@v2
 
-    - name: 🚀 Terraform Apply with dynamic IP
+    - name: 🚀 Terraform Init & Apply
       run: |
+        cd terraform
         terraform init
         terraform apply -var-file="github-runner.tfvars" -auto-approve
-      working-directory: terraform
 
-    - name: 💣 Terraform Destroy (optional)
+    - name: 🐍 Set Up Python + Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r scripts/requirements.txt
+
+    - name: 📦 Run Alembic Migrations
+      run: |
+        cd scripts
+        alembic upgrade head
+
+    - name: ✅ Run Pytest DB Validations
+      run: |
+        pytest scripts/data_sample_test.py
+
+    - name: 💣 Terraform Destroy (Optional Cleanup)
       if: always()
-      run: terraform destroy -var-file="github-runner.tfvars" -auto-approve
-      working-directory: terraform
+      run: |
+        cd terraform
+        terraform destroy -var-file="github-runner.tfvars" -auto-approve
