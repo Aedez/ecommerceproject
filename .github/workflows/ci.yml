@@ -27,7 +27,7 @@ jobs:
         echo "app_server_ip = \"${{ steps.ip.outputs.ipv4 }}/32\"" > terraform/github-runner.tfvars
         echo "alert_email = \"${{ secrets.ALERT_EMAIL }}\"" >> terraform/github-runner.tfvars
         echo "db_user = \"${{ secrets.DB_USER }}\"" >> terraform/github-runner.tfvars
-        echo "db_pass = \"${{ secrets.DB_PASS }}\"" >> terraform/github-runner.tfvars
+        echo "db_password = \"${{ secrets.DB_PASS }}\"" >> terraform/github-runner.tfvars
         echo "db_name = \"${{ secrets.DB_NAME }}\"" >> terraform/github-runner.tfvars
 
     - name: 🔧 Setup Terraform
