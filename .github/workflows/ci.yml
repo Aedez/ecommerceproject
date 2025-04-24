@@ -13,8 +13,8 @@ jobs:
       DB_PASS: ${{ secrets.DB_PASS }}
       DB_NAME: ${{ secrets.DB_NAME }}
       DB_HOST: ${{ secrets.DB_HOST }}
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
+      AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
 
 
     steps:
@@ -30,8 +30,9 @@ jobs:
         echo "app_server_ip = \"${{ steps.ip.outputs.ipv4 }}/32\"" > terraform/github-runner.tfvars
         echo "alert_email = \"${{ secrets.ALERT_EMAIL }}\"" >> terraform/github-runner.tfvars
         echo "db_user = \"${{ secrets.DB_USER }}\"" >> terraform/github-runner.tfvars
-        echo "db_password = \"${{ secrets.DB_PASS }}\"" >> terraform/github-runner.tfvars
-        echo "db_name = \"${{ secrets.DB_NAME }}\"" >> terraform/github-runner.tfvars
+        echo "aws_access_key = \"${{ secrets.AWS_ACCESS_KEY }}\"" >> terraform/github-runner.tfvars
+        echo "aws_secret_key = \"${{ secrets.AWS_SECRET_KEY }}\"" >> terraform/github-runner.tfvars
+
 
     - name: 🔧 Setup Terraform
       uses: hashicorp/setup-terraform@v2

@@ -37,3 +37,13 @@ variable "app_server_ip" {
   type        = string
   sensitive   = true
 } # This should be the public IP of your app server
+
+variable "aws_access_key" {
+  description = "AWS Access Key ID"
+  type        = string
+}
+
+variable "aws_secret_key" {
+  description = "AWS Secret Access Key"
+  type        = string
+}
