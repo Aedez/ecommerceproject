@@ -25,6 +25,7 @@ jobs:
     - name: ✏️ Create IP Override for Terraform
       run: |
         echo "app_server_ip = \"${{ steps.ip.outputs.ipv4 }}/32\"" > terraform/github-runner.tfvars
+        echo "alert_email = \"${{ secrets.ALERT_EMAIL }}\"" >> terraform/github-runner.tfvars
 
     - name: 🔧 Setup Terraform
       uses: hashicorp/setup-terraform@v2
