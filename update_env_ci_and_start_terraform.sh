@@ -10,7 +10,6 @@ echo "📝 Updating app_server_ip in terraform.tfvars..."
 sed -i.bak '/^app_server_ip *=/d' ../terraform/terraform.tfvars
 echo "app_server_ip = \"$IP/32\"" >> ../terraform/terraform.tfvars
 
-cd ..
 
 echo "🚀 Running terraform apply..."
 cd terraform
