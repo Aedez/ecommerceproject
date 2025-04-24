@@ -151,3 +151,19 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## 📞 Contact
 For questions or feedback, please reach out to:
+@mike
+
+
+## my reminder for local testing steps:
+update_env_ci_and_start_tf.sh
+alembic upgrade head
+python3 data_sample_loader.py  
+pytest data_sample_test.py  
+temporarily open aws sg to allow all ip. find a way to make it just github action ip later. 
+currently using a github repo that calls the ip address of the github action runner.
+maybe use aws cli to get the ip
+push to github
+github actions ci/cd
+... (will add application deployment steps later)
+bash terraform_safe_destroyer.sh to destroy the stack
+

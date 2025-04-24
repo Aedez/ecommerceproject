@@ -36,4 +36,4 @@ jobs:
 
       - name: Run Pytest
         run: |
-          pytest scripts/test_db.py
+          pytest scripts/data_sample_test.py

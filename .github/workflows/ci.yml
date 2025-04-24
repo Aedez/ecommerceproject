@@ -1,0 +1,29 @@
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v3
+
+    - name: 🌐 Get GitHub Runner Public IP
+      id: ip
+      uses: haythem/public-ip@v1.3
+
+    - name: ✏️ Override app_server_ip for CI
+      run: |
+        echo "app_server_ip = \"${{ steps.ip.outputs.ipv4 }}/32\"" > terraform/github-runner.tfvars
+
+    - name: 🧱 Terraform Init & Apply
+      uses: hashicorp/setup-terraform@v2
+
+    - name: 🚀 Terraform Apply with dynamic IP
+      run: |
+        terraform init
+        terraform apply -var-file="github-runner.tfvars" -auto-approve
+      working-directory: terraform
+
+    - name: 💣 Terraform Destroy (optional)
+        if: always()
+        run: terraform destroy -var-file="github-runner.tfvars" -auto-approve
+      working-directory: terraform

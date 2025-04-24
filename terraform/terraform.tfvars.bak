@@ -1,0 +1,5 @@
+db_password = "3etyhrh367hhddrip"
+aws_region = "eu-west-1"
+aws_profile = "default"
+alert_email = "real1micahel.1@gamil.com.com"
+app_server_ip = "197.251.149.165/32"
