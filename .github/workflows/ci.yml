@@ -24,6 +24,6 @@ jobs:
       working-directory: terraform
 
     - name: 💣 Terraform Destroy (optional)
-        if: always()
-        run: terraform destroy -var-file="github-runner.tfvars" -auto-approve
+      if: always()
+      run: terraform destroy -var-file="github-runner.tfvars" -auto-approve
       working-directory: terraform
