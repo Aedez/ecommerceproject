@@ -21,7 +21,7 @@ echo "📤 Extracting outputs ..."
 DB_HOST=$(terraform output -raw db_endpoint)
 DB_NAME=$(terraform output -raw db_name)
 DB_USER="ecom_user"
-DB_PASS="3etyhrh367hhddrip"  # 🔐 Optional: make dynamic later
+DB_PASS="*******"  # 🔐 Optional: make dynamic later
 #EMAIL="1@gamil.com" # 🔐 Optional: make dynamic later
 
 cd ..

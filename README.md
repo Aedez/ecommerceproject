@@ -155,7 +155,7 @@ For questions or feedback, please reach out to:
 
 
 ## my reminder for local testing steps:
-update_env_ci_and_start_tf.sh
+update_env_ci_and_start_tf.sh after adding password to .env file
 alembic upgrade head
 python3 data_sample_loader.py  
 pytest data_sample_test.py  
