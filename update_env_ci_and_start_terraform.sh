@@ -6,22 +6,27 @@ echo "🌍 Fetching your public IP..."
 IP=$(curl -s ifconfig.me)
 
 echo "📝 Updating app_server_ip in terraform.tfvars..."
-# Remove old line and replace it
 sed -i.bak '/^app_server_ip *=/d' ../terraform/terraform.tfvars
 echo "app_server_ip = \"$IP/32\"" >> ../terraform/terraform.tfvars
 
 
 echo "🚀 Running terraform apply..."
 cd terraform
-#terraform init
+#terraform init # Uncomment if you want to reinitialize
 terraform apply -auto-approve
 
 echo "📤 Extracting outputs ..."
 DB_HOST=$(terraform output -raw db_endpoint)
 DB_NAME=$(terraform output -raw db_name)
 DB_USER="ecom_user"
-DB_PASS="*******"  # 🔐 Optional: make dynamic later
-#EMAIL="1@gamil.com" # 🔐 Optional: make dynamic later
+#EMAIL="1@gamil.com" # 🔐 Optional: maybe make dynamic later
+
+echo "🔐 Generating secure random DB password..."
+DB_PASS=$(openssl rand -base64 18)
+
+echo "🔐 Updating terraform.tfvars..."
+sed -i.bak '/^db_pass *=/d' ../terraform/terraform.tfvars
+echo "db_pass = \"$DB_PASS\"" >> ../terraform/terraform.tfvars
 
 cd ..
 
