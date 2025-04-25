@@ -16,7 +16,6 @@ jobs:
       AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
       AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
 
-
     steps:
     - name: 📥 Checkout Code
       uses: actions/checkout@v3
@@ -34,7 +33,6 @@ jobs:
         echo "aws_access_key = \"${{ secrets.AWS_ACCESS_KEY }}\"" >> terraform/github-runner.tfvars
         echo "aws_secret_key = \"${{ secrets.AWS_SECRET_KEY }}\"" >> terraform/github-runner.tfvars
 
-
     - name: 🔧 Setup Terraform
       uses: hashicorp/setup-terraform@v2
 
@@ -43,6 +41,13 @@ jobs:
         cd terraform
         terraform init
         terraform apply -var-file="github-runner.tfvars" -auto-approve
+
+    - name: ⏳ Wait for RDS DNS Propagation
+      run: |
+        echo "Waiting for RDS DNS to resolve..."
+        for i in {1..10}; do
+          nslookup $DB_HOST && break || sleep 5
+        done
 
     - name: 🐍 Set Up Python + Install Dependencies
       run: |
