@@ -52,8 +52,8 @@ jobs:
         else
           DB_HOST=$RAW_DB_HOST
         fi
-        
-        echo "DB_HOST=${DB_HOST}" >> $GITHUB_ENV
+
+        echo "DB_HOST=${DB_HOST}" | sed 's/\r//' >> $GITHUB_ENV
 
     - name: ⏳ Wait for RDS DNS Propagation
       run: |
