@@ -12,6 +12,7 @@ jobs:
       DB_USER: ${{ secrets.DB_USER }}
       DB_PASS: ${{ secrets.DB_PASS }}
       DB_NAME: ${{ secrets.DB_NAME }}
+      DB_HOST: ${{ steps.tf.outputs.db_host }}
       AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
       AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
 
@@ -40,20 +41,6 @@ jobs:
         cd terraform
         terraform init
         terraform apply -var-file="github-runner.tfvars" -auto-approve
-
-    - name: 🔄 Extract Clean DB Hostname
-      working-directory: terraform
-      run: |
-        echo "🔍 Cleaning DB_HOST..."
-        RAW_DB_HOST=$(terraform output -raw db_endpoint)
-
-        if [[ "$RAW_DB_HOST" == *:* ]]; then
-          DB_HOST=${RAW_DB_HOST%%:*}
-        else
-          DB_HOST=$RAW_DB_HOST
-        fi
-
-        echo "DB_HOST=${DB_HOST}" | sed 's/\r//' >> $GITHUB_ENV
 
     - name: ⏳ Wait for RDS DNS Propagation
       run: |

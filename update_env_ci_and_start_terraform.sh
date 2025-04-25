@@ -16,7 +16,7 @@ cd terraform
 terraform apply -auto-approve
 
 echo "📤 Extracting outputs ..."
-DB_HOST=$(terraform output -raw db_endpoint)
+DB_HOST=$(terraform output -raw db_host)
 DB_NAME=$(terraform output -raw db_name)
 DB_USER="ecom_user"
 #EMAIL="1@gamil.com" # 🔐 Optional: maybe make dynamic later
