@@ -12,7 +12,7 @@ jobs:
       DB_USER: ${{ secrets.DB_USER }}
       DB_PASS: ${{ secrets.DB_PASS }}
       DB_NAME: ${{ secrets.DB_NAME }}
-      DB_HOST: ${{ steps.tf.outputs.db_host }}
+      DB_HOST: ${{ secrets.DB_HOST }}
       AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
       AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
 
@@ -41,6 +41,11 @@ jobs:
         cd terraform
         terraform init
         terraform apply -var-file="github-runner.tfvars" -auto-approve
+
+    - name: 📤 Export DB_HOST from Terraform Output
+      run: |
+        DB_HOST=$(cd terraform && terraform output -raw db_host)
+        echo "DB_HOST=${DB_HOST}" >> $GITHUB_ENV
 
     - name: ⏳ Wait for RDS DNS Propagation
       run: |
