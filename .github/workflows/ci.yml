@@ -42,12 +42,18 @@ jobs:
         terraform apply -var-file="github-runner.tfvars" -auto-approve
 
     - name: 🔄 Extract Clean DB Hostname
+      working-directory: terraform
       run: |
         echo "🔍 Cleaning DB_HOST..."
-        export RAW_DB_HOST=$(terraform output -raw db_endpoint)
-        export DB_HOST=${RAW_DB_HOST%%:*}
-        echo "DB_HOST=$DB_HOST" >> $GITHUB_ENV
-      working-directory: terraform
+        RAW_DB_HOST=$(terraform output -raw db_endpoint)
+
+        if [[ "$RAW_DB_HOST" == *:* ]]; then
+          DB_HOST=${RAW_DB_HOST%%:*}
+        else
+          DB_HOST=$RAW_DB_HOST
+        fi
+        
+        echo "DB_HOST=${DB_HOST}" >> $GITHUB_ENV
 
     - name: ⏳ Wait for RDS DNS Propagation
       run: |
